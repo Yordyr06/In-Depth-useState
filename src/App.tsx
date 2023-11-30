@@ -9,8 +9,8 @@ export const App = (): JSX.Element => {
         My App
       </h1>
 
-      <UseState />
-      <ClassState />
+      <UseState name={"Use State"}/>
+      <ClassState name={"Class State"}/>
     </>
   )
 }
