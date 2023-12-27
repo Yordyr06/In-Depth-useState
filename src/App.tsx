@@ -5,7 +5,7 @@ import { ClassState } from "./components/ClassState/ClassState"
 export const App = (): JSX.Element => {
   return (
     <>
-      <h1 className="font-extrabold text-4xl text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-white">
+      <h1 className="p-2 font-extrabold text-4xl text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-white">
         My App
       </h1>
 

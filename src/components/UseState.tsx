@@ -1,32 +1,38 @@
 import { useEffect, useState } from "react";
-import type { MouseEvent } from "react";
+import type { ChangeEvent, MouseEvent, } from "react";
 
 type Props = {
   name: string
 };
 
+const SECURITY_CODE: string = 'paradigma'
+
 export const UseState = ({ name }: Props ): JSX.Element => {
+  const [value, setValue] = useState<string>('')
   const [isError, setIsError] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     setIsLoading(true);
+    setIsError(false);
   }
 
   useEffect(() => {
     isLoading ? (
       setTimeout(() => {
+        value !== SECURITY_CODE ? (
+          setIsError(isError => !isError)
+        ) : ("")
         setIsLoading(false)
-        setIsError(isError => !isError)
       }, 3000)
     ) : ("")
-  }, [isLoading]);
+  }, [isLoading, value]);
 
   return (
     <section className="flex flex-col mx-auto items-center my-8 h-auto w-96 text-center gap-y-4">
       <article className="text-lg py-2 px-4 rounded-md bg-slate-700">
-        <h2>Eliminate {name}</h2>
+        <h2 className="text-2xl p-2 font-semibold">Eliminate {name}</h2>
         <p>Please, write the correct code to continue</p>
         
         {isError ? (
@@ -42,7 +48,11 @@ export const UseState = ({ name }: Props ): JSX.Element => {
         action=""
         className="flex gap-x-20 text-lg"  
         >
-        <input 
+        <input
+          value={value}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            setValue(event.target.value)
+          }}
           placeholder="code"
           className="h-8 rounded-md text-center align-middle"
         />
@@ -56,5 +66,5 @@ export const UseState = ({ name }: Props ): JSX.Element => {
     </section>
   )
 };
-
+6
 // Sistema de recepcion hotelera con mineria de datos
