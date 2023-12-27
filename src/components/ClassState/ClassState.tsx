@@ -1,4 +1,6 @@
 import { Component } from "react";
+import { IsError } from "./IsError";
+import { IsLoading } from "./IsLoading";
 import type { MouseEvent } from "react";
 
 type Props = {
@@ -6,7 +8,8 @@ type Props = {
 }
 
 type State = {
-  error: boolean
+  isError: boolean,
+  isLoading: boolean
 }
 
 export class ClassState extends Component<Props, State> {
@@ -14,29 +17,47 @@ export class ClassState extends Component<Props, State> {
     super(props);
 
     this.state = {
-      error: false,
+      isError: false,
+      isLoading: false,
     };
   }
 
   handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault()
-    this.setState((prevState) => ({ error: !prevState.error }));
-  };
+    this.setState((prevState) => ({ 
+      isError: !prevState.isError,
+      isLoading: true,
+    }));
+  };  
+
+  componentDidUpdate(): void {
+    this.state.isLoading ? (
+      setTimeout(() => {
+        this.setState((prevState) => ({
+          isLoading: false,
+          isError: !prevState.isError,
+        }));
+      }, 3000)
+    ) : ("");
+  }
 
   render() {
     const { name } = this.props;
-    const { error } = this.state;
+    const { isError, isLoading } = this.state;
 
     return (
       <section className="flex flex-col mx-auto items-center my-8 w-96 text-center gap-y-4">
       <article className="text-lg py-2 px-4 rounded-md bg-slate-700">
         <h2>Eliminate {name}</h2>
         <p>Please, write the correct code to continue</p>
-        {
-          error ? (
-            <p className="text-lg font-bold text-red-500"> ❌ Invalid code </p>
-          ) : ("")
-        }
+        
+        {isError ? (
+            <IsError />
+          ) : ("")}
+        
+        {isLoading ? (
+          <IsLoading />
+        ) : ("")}
       </article>
       <form 
         action=""

@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const UseState = ({ name }: Props ): JSX.Element => {
-  const [error, setError] = useState<boolean>(false)
+  const [isError, setIsError] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
@@ -18,8 +18,9 @@ export const UseState = ({ name }: Props ): JSX.Element => {
     isLoading ? (
       setTimeout(() => {
         setIsLoading(false)
-        setError(error => !error)
-      }, 3000)) : ("")
+        setIsError(isError => !isError)
+      }, 3000)
+    ) : ("")
   }, [isLoading]);
 
   return (
@@ -28,7 +29,7 @@ export const UseState = ({ name }: Props ): JSX.Element => {
         <h2>Eliminate {name}</h2>
         <p>Please, write the correct code to continue</p>
         
-        {error ? (
+        {isError ? (
             <span className="text-lg font-bold text-red-500"> ❌ Invalid code </span>
           ) : ("")}
         
@@ -55,3 +56,5 @@ export const UseState = ({ name }: Props ): JSX.Element => {
     </section>
   )
 };
+
+// Sistema de recepcion hotelera con mineria de datos
