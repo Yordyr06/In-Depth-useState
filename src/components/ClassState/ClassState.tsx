@@ -1,22 +1,26 @@
 import { Component } from "react";
 import { IsError } from "./IsError";
 import { IsLoading } from "./IsLoading";
-import type { MouseEvent } from "react";
+import type { MouseEvent, ChangeEvent } from "react";
 
 type Props = {
   name: string
 }
 
 type State = {
+  value: string,
   isError: boolean,
-  isLoading: boolean
+  isLoading: boolean,
 }
+
+const SECURITY_CODE: string = 'paradigma'
 
 export class ClassState extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
     this.state = {
+      value: "",
       isError: false,
       isLoading: false,
     };
@@ -24,26 +28,28 @@ export class ClassState extends Component<Props, State> {
 
   handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault()
-    this.setState((prevState) => ({ 
-      isError: !prevState.isError,
+    this.setState({ 
+      isError: false,
       isLoading: true,
-    }));
+    });
   };  
 
   componentDidUpdate(): void {
     this.state.isLoading ? (
       setTimeout(() => {
-        this.setState((prevState) => ({
-          isLoading: false,
-          isError: !prevState.isError,
-        }));
+        this.state.value !== SECURITY_CODE ? (
+          this.setState((prevState) => ({
+            isError: !prevState.isError,
+          }))
+        ) : ("")
+        this.setState({ isLoading: false })
       }, 3000)
     ) : ("");
   }
 
   render() {
     const { name } = this.props;
-    const { isError, isLoading } = this.state;
+    const { value, isError, isLoading } = this.state;
 
     return (
       <section className="flex flex-col mx-auto items-center my-8 w-96 text-center gap-y-4">
@@ -64,6 +70,10 @@ export class ClassState extends Component<Props, State> {
         className="text-lg flex gap-x-20"  
         >
         <input 
+          value={value}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            this.setState({ value: event.target.value })
+          }}
           placeholder="code"
           className="h-8 rounded-md text-center align-middle"
         />
