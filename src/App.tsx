@@ -1,6 +1,6 @@
 import React from "react"
 import { UseState } from "./components/UseState"
-import { ClassState } from "./components/ClassState/ClassState"
+import { ClassState } from "./components/ClassState"
 
 export const App = (): JSX.Element => {
   return (

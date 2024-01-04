@@ -3,6 +3,7 @@ import { IsError } from "./IsError";
 import { IsLoading } from "./IsLoading";
 import type { MouseEvent, ChangeEvent } from "react";
 
+
 type Props = {
   name: string
 }
@@ -57,13 +58,14 @@ export class ClassState extends Component<Props, State> {
         <h2 className="text-2xl p-2 font-semibold">Eliminate {name}</h2>
         <p>Please, write the correct code to continue</p>
         
+        {isLoading ? (
+          <IsLoading />
+        ) : ("")}
+
         {isError ? (
             <IsError />
           ) : ("")}
         
-        {isLoading ? (
-          <IsLoading />
-        ) : ("")}
       </article>
       <form 
         action=""
